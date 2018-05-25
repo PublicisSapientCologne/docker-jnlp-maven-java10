@@ -8,9 +8,10 @@ ARG gid=10000
 ENV HOME /home/${user} 
 RUN groupadd -g ${gid} ${group}
 RUN useradd -c "Jenkins user" -d $HOME -u ${uid} -g ${gid} -m ${user}
-RUN apt-get update
-RUN apt-get install -y maven python3
-RUN apt-get clean
+RUN apt-get update \
+  && apt-get install -y maven python3 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION=3.20 
 ARG AGENT_WORKDIR=/home/${user}/agent

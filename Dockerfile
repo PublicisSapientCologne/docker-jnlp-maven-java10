@@ -1,17 +1,19 @@
-FROM openjdk:10-jdk
+FROM adoptopenjdk/openjdk11:latest
 
 ARG user=jenkins
 ARG group=jenkins
-ARG uid=10000
-ARG gid=10000
+ARG uid=113
+ARG gid=117
 
 ENV HOME /home/${user}
 RUN groupadd -g ${gid} ${group}
 RUN useradd -c "Jenkins user" -d $HOME -u ${uid} -g ${gid} -m ${user}
-RUN apt-get update \
-  && apt-get install -y maven python3 \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  
+RUN apt-get update && apt-get -y install \
+    python3 \
+    maven \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ARG VERSION=3.20
 ARG AGENT_WORKDIR=/home/${user}/agent

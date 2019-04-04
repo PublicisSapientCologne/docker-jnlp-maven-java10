@@ -12,6 +12,7 @@ RUN useradd -c "Jenkins user" -d $HOME -u ${uid} -g ${gid} -m ${user}
 RUN apt-get update && apt-get -y install \
     python3 \
     maven \
+    git-core \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
